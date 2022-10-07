@@ -1,0 +1,13 @@
+{% extends  "index.html" %}
+
+{% block content %}
+    <a href="{% url 'sales:sale-create' %}">Create a new Sale</a>
+    <hr />
+    <h1>This is all of our sales</h1>
+    {% for sale in sales %}
+        <div class="sale">
+            <a href="{% url 'sales:sale-detail' sale.pk %}"> {{ sale.first_name }} {{ sale.last_name}} </a>
+        </div>
+    {% endfor %}
+
+{% endblock content %}

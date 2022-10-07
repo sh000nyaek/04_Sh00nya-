@@ -1,0 +1,14 @@
+{% extends 'index.html'%}
+
+{% block content %}
+
+    <a href="{% url 'sales:sale-list' %}">Go back to list</a>
+    <hr>
+    <h1>This is the details of {{ sale.first_name}}</h1>
+    <p> This persons age: {{sale.age}}</p>
+    <p>The agent responsible for this sale is : {{ sale.agent }}</p>
+    <hr />
+    <a href="{% url 'sales:sale-update' sale.pk %}">Update</a>
+    <a href="{% url 'sales:sale-delete' sale.pk %}">Delete</a>
+
+{% endblock content%}

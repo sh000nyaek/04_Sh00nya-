@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <a href="{% url 'sales:sale-detail' sale.pk %}"> Go back to {{ sale.first_name }} {{ sale.last_name}}</a>
+    <hr />
+    <h1>Update a Sale:  {{ sale.first_name }} {{ sale.last_name}} </h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock content %}
