@@ -1,11 +1,37 @@
-from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
-from .models import Sales_Agent, sale
-from .forms import SaleForm, SaleModelForm
+from django.views import generic
+from .models import sale,Sales_Agent
+from .forms import CustomUserCreationForm, SaleForm, SaleModelForm
+
+
+
+class SignupView(generic.CreateView):
+    template_name = "registration/signup.html"
+    form_class = CustomUserCreationForm
+
+
+    def get_success_url(self):
+        return reverse("login")
+
+
+
+
+class LandingPageView(generic.TemplateView):
+    template_name = "home_page.html"
 
 
 def home_page(request):
     return render(request,"home_page.html")
+
+
+
+class SaleListView(generic.ListView):
+    template_name = "sales/sale_list.html"
+    queryset = sale.objects.all()
+    
+    
 
 
 
@@ -17,6 +43,12 @@ def sale_list(request):
     return render(request, "sales/sale_list.html",context)
 
 
+class SaleDetailView(generic.DetailView):
+    template_name = "sales/sale_detail.html"
+    queryset = sale.objects.all()
+    
+
+
 
 def sale_detail(request, pk):
     sales = sale.objects.get(id=pk)
@@ -24,6 +56,29 @@ def sale_detail(request, pk):
         "sale" : sales
     }
     return render(request, "sales/sale_detail.html", context)
+
+
+class SaleCreateView(generic.CreateView):
+    template_name = "sales/sale_create.html"
+    form_class = SaleModelForm
+
+
+    def get_success_url(self):
+        return reverse("sales:sale-list")
+
+
+    def form_valid(self,form):
+        #send email
+        send_mail(
+            subject="A Sale has been created", 
+            message="Visit site to view Sale Details",
+            from_email = "test@test.com",
+            recipient_list = ["test2@test.com"]
+        )
+
+        return super(SaleCreateView, self).form_valid(form)
+
+
 
 
 def sale_create(request):
@@ -40,6 +95,17 @@ def sale_create(request):
     return render(request, "sales/sale_create.html",context)
 
 
+
+class SaleUpdateView(generic.UpdateView):
+    template_name = "sales/sale_update.html"
+    queryset = sale.objects.all()
+    form_class = SaleModelForm
+
+
+    def get_success_url(self):
+        return reverse("sales:sale-list")
+
+
 def sale_update(request, pk):
     sales = sale.objects.get(id=pk)
     form = SaleModelForm(instance=sales)
@@ -53,6 +119,18 @@ def sale_update(request, pk):
         "sale": sales
     }
     return render(request, "sales/sale_update.html",context)
+
+
+
+class SaleDeleteView(generic.DeleteView):
+    template_name = "sales/sale_delete.html"
+    queryset = sale.objects.all()
+    
+
+
+    def get_success_url(self):
+        return reverse("sales:sale-list")
+
 
 
 def sale_delete(request, pk):

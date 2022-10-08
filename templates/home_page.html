@@ -1,16 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vyaapaar</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-    <div class="max-w-10xl mx-auto ">
-        {% include 'navbar.html' %} 
-        
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+<section class="text-gray-600 body-font">
+  <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+      <img class="object-cover object-center rounded" alt="hero" src="">
     </div>
-</body>
-</html>
+    <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900"> Vyaapaar
+        <br class="hidden lg:inline-block"> CRM for Business
+      </h1>
+      <p class="mb-8 leading-relaxed">CRM lets you automatically capture your messages to and from your contacts to your Account Activities. Once set up, any messages exchanged between your CRM Users and your CRM Contacts are recorded to the account timeline</p>
+      
+    </div>
+  </div>
+</section>
+
+
+{% endblock content %}
